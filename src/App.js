@@ -9,38 +9,38 @@ class App extends React.Component {
     super();
 
     this.state = {
-      data: [],
-      isLoaded: false,
-      data: [],
-      per: 3,
+      cards: [],
       page: 1,
-      total_pages: null,
+      totalCount: 0,
+      isLoaded: false
     };
   }
 
   componentDidMount() {
     this.loadCards();
     
-    this.scrollListener = window.addEventListener("scroll", e => {
-      this.handleScroll(e);
-    });
+    this.scrollListener = window.addEventListener('scroll', this.handleScroll);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleScroll);
   }
 
   loadCards = () => {
-    // const { per, page, data } = this.state;
-    // https://api.elderscrollslegends.io/v1/cards?page=2
-    const cardsApiUrl = 'https://api.elderscrollslegends.io/v1/cards?page=2';
+    const { cards, totalCount } = this.state;
+    const cardsApiUrl = `https://api.elderscrollslegends.io/v1/cards?page=${this.state.page}`;
+
+    if (totalCount === 0 || cards.length < totalCount) {
       fetch(cardsApiUrl)
         .then(response => response.json())
           .then(
             (json) => {
-              // console.log(data);
+              console.log(json);
               this.setState({
                 isLoaded: true,
-                // data: [...json, ...json.cards],
-                data: json,
+                cards: [...cards, ...json.cards],
                 scrolling: false,
-                pageCount: json._totalCount
+                totalCount: json._totalCount
               });
             },
             (error) => {
@@ -50,10 +50,10 @@ class App extends React.Component {
               });
             }
           );
+    }
   };
 
   loadMore = () => {
-    alert('loading more data');
     this.setState(
       prevState => ({
         page: prevState.page + 1,
@@ -65,11 +65,11 @@ class App extends React.Component {
   };
 
   handleScroll = () => { 
-    var lastLi = document.querySelector(".card-list > div.card-container:last-child");
-    var lastLiOffset = lastLi.offsetTop + lastLi.clientHeight;
-    var pageOffset = window.pageYOffset + window.innerHeight;
+    const lastCard = document.querySelector(".card-list > div.card-container:last-child");
+    const lastCardOffset = lastCard.offsetTop + lastCard.clientHeight;
+    const pageOffset = window.pageYOffset + window.innerHeight;
     
-    if (pageOffset > lastLiOffset) {
+    if (pageOffset > lastCardOffset - 100) {
           this.loadMore();
       }
   };
@@ -79,7 +79,7 @@ class App extends React.Component {
       <div className="app-container">
         <Infinitescroll />
         {this.state.isLoaded ? <CardList 
-          cards={this.state.data.cards}>
+          cards={this.state.cards}>
         </CardList>
          : <LoadingIndicator />
         }
