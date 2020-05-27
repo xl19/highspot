@@ -61,7 +61,8 @@ export class InfiniteScroll extends React.Component {
         }
     };
 
-    loadMore = () => {
+    // Let's go to the next page.
+    loadMoreData = () => {
         this.setState(
             prevState => ({
                 page: prevState.page + 1,
@@ -77,12 +78,16 @@ export class InfiniteScroll extends React.Component {
         const lastElement = document.querySelector(".item-list > div.item-container:last-child");
         const lastElementOffset = lastElement.offsetTop + lastElement.clientHeight;
         const pageOffset = window.pageYOffset + window.innerHeight;
+        const spaceBuffer = 100;
         
-        // If we got to the end of the page, check the current count
-        if (pageOffset > lastElementOffset - 100) {
+        /* If we reached the end of the page, check the current count and load more data from the API. 
+         * 100 pixels have been hard-coded and represent an extra space buffer to detect
+         * when the user reaches the end of the page while scrolling down.
+         */ 
+        if (pageOffset > lastElementOffset - spaceBuffer) {
             // If the current count is multiple than the page size, it's time to make another API call
             if (this.state.currentCount % this.state.pageSize === 0) {
-                this.loadMore();
+                this.loadMoreData();
             }
 
             // Update the current count to reflect how many items we are showing in the UI
@@ -97,6 +102,8 @@ export class InfiniteScroll extends React.Component {
         const filteredData = this.state.data.filter(
             element => element.name.toLowerCase().includes(this.props.searchTerm.toLowerCase())
         );
+
+        // Only show a predefined number of items per each request - starting with 20 in our case.
         const slicedData = filteredData.slice(0, this.state.currentCount);
 
         return this.state.isLoaded ? <this.props.component data={slicedData} /> : <LoadingIndicator />;

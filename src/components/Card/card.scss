@@ -1,3 +1,9 @@
+/* Some of the card images coming from the API visually take different portions 
+ * of the viewport than others, so they may appear not vertically aligned with the adjecent ones.
+ * 
+ * However, the image container does have the same size, so we intentionally keep it this way
+ * since we don't know the exact position of each image within its placeholder at priori.
+ */
 .item-container {
     flex-direction: column;
     cursor: pointer;
