@@ -5,7 +5,7 @@ import { Card } from '../Card/card';
 export const CardList = props => (
     <div className='card-list'>
         {
-            props.cards.map(card => (
+            props.data.map(card => (
                 <Card key={card.name} card={card}></Card>
             ))
         }
