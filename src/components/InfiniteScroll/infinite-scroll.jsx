@@ -33,21 +33,21 @@ export class InfiniteScroll extends React.Component {
             fetch(this.props.url(this.state.page))
             .then(response => response.json())
                 .then(
-                (json) => {
-                    this.setState({
-                    isLoaded: true,
-                    data: [...data, ...json[this.props.dataProperty]],
-                    scrolling: false,
-                    totalCount: json._totalCount
-                    });
-                },
-                (error) => {
-                    this.setState({
-                    isLoaded: false,
-                    error
-                    });
-                }
-                );
+                    (json) => {
+                        this.setState({
+                            isLoaded: true,
+                            data: [...data, ...json[this.props.dataProperty]],
+                            scrolling: false,
+                            totalCount: json._totalCount
+                        });
+                    },
+                    (error) => {
+                        this.setState({
+                            isLoaded: false,
+                            error
+                        });
+                    }
+            );
         }
     };
 
@@ -73,9 +73,6 @@ export class InfiniteScroll extends React.Component {
     };
 
     render() {
-        return this.state.isLoaded ? 
-            React.createElement(
-                this.props.component, { data: this.state.data }
-            ) : LoadingIndicator;
+        return this.state.isLoaded ? <this.props.component data={this.state.data} /> : <LoadingIndicator />;
     }
 };
