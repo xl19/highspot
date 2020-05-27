@@ -15,11 +15,8 @@ export class InfiniteScroll extends React.Component {
     }
 
     componentDidMount() {
-        this.loadData();
-    }
-
-    componentWillMount() {
         this.scrollListener = window.addEventListener('scroll', this.handleScroll);
+        this.loadData();
     }
 
     componentWillUnmount() {
