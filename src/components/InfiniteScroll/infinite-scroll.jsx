@@ -9,6 +9,7 @@ export class InfiniteScroll extends React.Component {
             data: [],
             page: 1,
             totalCount: 0,
+            searchField: '',
             isLoaded: false,
             error: ''
         };
@@ -70,6 +71,11 @@ export class InfiniteScroll extends React.Component {
     };
 
     render() {
-        return this.state.isLoaded ? <this.props.component data={this.state.data} /> : <LoadingIndicator />;
+        const { data } = this.state;
+        const filteredData = data.filter(
+            element => element.name.toLowerCase().includes(this.props.searchField.toLowerCase())
+        );
+
+        return this.state.isLoaded ? <this.props.component data={filteredData} /> : <LoadingIndicator />;
     }
 };
