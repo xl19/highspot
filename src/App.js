@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.scss';
 import { CardList } from './components/card-list/card-list';
+import { LoadingIndicator } from './components/Loader/loader';
 
 class App extends React.Component {
   constructor() {
@@ -39,7 +40,7 @@ class App extends React.Component {
         {this.state.isLoaded ? <CardList 
           cards={this.state.cardsResponse.cards}>
         </CardList>
-         : undefined
+         : <LoadingIndicator />
         }
       </div>
     );
