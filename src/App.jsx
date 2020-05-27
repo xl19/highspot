@@ -5,12 +5,13 @@ import { InfiniteScroll } from './components/InfiniteScroll/infinite-scroll';
 import { cardsApiUrl } from './constants';
 import { SearchBox } from './components/SearchBox/search-box';
 
+// This is the main React component used to launch the application
 class App extends React.Component {
   constructor() {
     super();
 
     this.state = {
-      searchField: ''
+      searchTerm: ''
     };
   }
 
@@ -20,14 +21,14 @@ class App extends React.Component {
         <SearchBox 
           placeholder="Search cards" 
           handleChange={e => this.setState({
-            searchField: e.target.value
+            searchTerm: e.target.value
           })} />
 
         <InfiniteScroll 
           component={CardList} 
           url={cardsApiUrl} 
           dataProperty={'cards'} 
-          searchField={this.state.searchField} 
+          searchTerm={this.state.searchTerm} 
         />
       </div>
     );

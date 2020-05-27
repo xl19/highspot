@@ -1,6 +1,9 @@
 import React from "react";
 import { LoadingIndicator } from '../Loader/loader';
 
+/* This component implements an "infinite scrolling" mechanism and is completely data agnostic.
+ * It can be re-used and fed with any data set where the state shape has a compatible structure.
+*/
 export class InfiniteScroll extends React.Component {
     constructor(props) {
         super(props);
@@ -13,7 +16,7 @@ export class InfiniteScroll extends React.Component {
             currentCount: this.itemsPerTime,
             totalCount: 0,
             pageSize: 0,
-            searchField: '',
+            searchTerm: '',
             isLoaded: false,
             error: ''
         };
@@ -31,11 +34,15 @@ export class InfiniteScroll extends React.Component {
     loadData = () => {
         const { data, totalCount } = this.state;
 
+        // We only fetch more data if the current data set length is smaller than the total count
         if (totalCount === 0 || data.length < totalCount) {
             fetch(this.props.url(this.state.page))
             .then(response => response.json())
                 .then(
                     (json) => {
+                        // Append additional data to the current state with the spread operator.
+                        // We dynamically pass the name of the property containing the actual data as a prop,
+                        // which keeps the component data agnostic.
                         this.setState({
                             isLoaded: true,
                             data: [...data, ...json[this.props.dataProperty]],
@@ -65,16 +72,20 @@ export class InfiniteScroll extends React.Component {
         );
     };
 
+    // We dynamically calculate the offset of the last element in the list, to detect the end of the page
     handleScroll = () => { 
         const lastElement = document.querySelector(".item-list > div.item-container:last-child");
         const lastElementOffset = lastElement.offsetTop + lastElement.clientHeight;
         const pageOffset = window.pageYOffset + window.innerHeight;
         
+        // If we got to the end of the page, check the current count
         if (pageOffset > lastElementOffset - 100) {
+            // If the current count is multiple than the page size, it's time to make another API call
             if (this.state.currentCount % this.state.pageSize === 0) {
                 this.loadMore();
             }
 
+            // Update the current count to reflect how many items we are showing in the UI
             this.setState({
                 currentCount: this.state.currentCount + this.itemsPerTime
             });
@@ -82,8 +93,9 @@ export class InfiniteScroll extends React.Component {
     };
 
     render() {
+        // Filter the current data set by the current search term typed by the user
         const filteredData = this.state.data.filter(
-            element => element.name.toLowerCase().includes(this.props.searchField.toLowerCase())
+            element => element.name.toLowerCase().includes(this.props.searchTerm.toLowerCase())
         );
         const slicedData = filteredData.slice(0, this.state.currentCount);
 
