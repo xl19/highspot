@@ -1,26 +1,49 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { CardList } from './components/card-list/card-list';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {
+      cardsResponse: [],
+      isLoaded: false
+    };
+  }
+
+  componentDidMount() {
+    const cardsApi = 'https://api.elderscrollslegends.io/v1/cards';
+    
+    fetch(cardsApi)
+      .then(response => response.json())
+      .then(
+        (result) => {
+          this.setState({
+            isLoaded: true,
+            cardsResponse: result
+          });
+        },
+        (error) => {
+          this.setState({
+            isLoaded: false,
+            error
+          });
+        }
+      )
+  }
+
+  render() {
+    return (
+      <div className="App">
+        {this.state.isLoaded ? <CardList 
+          cards={this.state.cardsResponse.cards}>
+        </CardList>
+         : undefined
+        }
+      </div>
+    );
+  }
 }
 
 export default App;
