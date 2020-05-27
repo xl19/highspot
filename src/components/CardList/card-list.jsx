@@ -3,7 +3,7 @@ import './card-list.scss';
 import { Card } from '../Card/card';
 
 export const CardList = props => (
-    <div className='card-list'>
+    <div className='item-list'>
         {
             props.data.map(card => (
                 <Card key={card.name} card={card}></Card>

@@ -1,4 +1,4 @@
-.card-container {
+.item-container {
     display: flex;
     flex-direction: column;
     cursor: pointer;
@@ -8,6 +8,6 @@
     transition: transform 0.25s ease-out;
 }
 
-.card-container:hover {
+.item-container:hover {
     transform: scale(1.05)
 }

@@ -15,7 +15,7 @@ export class InfiniteScroll extends React.Component {
     }
 
     componentDidMount() {
-        this.loadCards();
+        this.loadData();
       }
     
       componentWillMount() {
@@ -26,18 +26,17 @@ export class InfiniteScroll extends React.Component {
         window.removeEventListener('scroll', this.handleScroll);
       }
     
-      loadCards = () => {
+      loadData = () => {
         const { data, totalCount } = this.state;
-        const cardsApiUrl = `https://api.elderscrollslegends.io/v1/cards?page=${this.state.page}`;
     
         if (totalCount === 0 || data.length < totalCount) {
-          fetch(cardsApiUrl)
+          fetch(this.props.url(this.state.page))
             .then(response => response.json())
               .then(
                 (json) => {
                   this.setState({
                     isLoaded: true,
-                    data: [...data, ...json['cards']],
+                    data: [...data, ...json[this.props.dataProperty]],
                     scrolling: false,
                     totalCount: json._totalCount
                   });
@@ -59,16 +58,16 @@ export class InfiniteScroll extends React.Component {
             scrolling: true
           }),
     
-          this.loadCards
+          this.loadData
         );
       };
     
       handleScroll = () => { 
-        const lastCard = document.querySelector(".card-list > div.card-container:last-child");
-        const lastCardOffset = lastCard.offsetTop + lastCard.clientHeight;
+        const lastElement = document.querySelector(".item-list > div.item-container:last-child");
+        const lastElementOffset = lastElement.offsetTop + lastElement.clientHeight;
         const pageOffset = window.pageYOffset + window.innerHeight;
         
-        if (pageOffset > lastCardOffset - 100) {
+        if (pageOffset > lastElementOffset - 100) {
               this.loadMore();
           }
       };

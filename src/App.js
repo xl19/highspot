@@ -2,6 +2,7 @@ import React from 'react';
 import './App.scss';
 import { CardList } from './components/CardList/card-list';
 import { InfiniteScroll } from './components/InfiniteScroll/infinite-scroll';
+import { cardsApiUrl } from './constants';
 
 class App extends React.Component {
   constructor() {
@@ -11,7 +12,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="app-container">
-        <InfiniteScroll component={CardList} />
+        <InfiniteScroll component={CardList} url={cardsApiUrl} dataProperty={'cards'} />
       </div>
     );
   }
