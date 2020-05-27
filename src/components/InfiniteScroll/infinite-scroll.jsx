@@ -11,69 +11,68 @@ export class InfiniteScroll extends React.Component {
             totalCount: 0,
             isLoaded: false,
             error: ''
-          };
+        };
     }
 
     componentDidMount() {
         this.loadData();
-      }
-    
-      componentWillMount() {
+    }
+
+    componentWillMount() {
         this.scrollListener = window.addEventListener('scroll', this.handleScroll);
-      }
-    
-      componentWillUnmount() {
+    }
+
+    componentWillUnmount() {
         window.removeEventListener('scroll', this.handleScroll);
-      }
-    
-      loadData = () => {
+    }
+
+    loadData = () => {
         const { data, totalCount } = this.state;
-    
+
         if (totalCount === 0 || data.length < totalCount) {
-          fetch(this.props.url(this.state.page))
+            fetch(this.props.url(this.state.page))
             .then(response => response.json())
-              .then(
+                .then(
                 (json) => {
-                  this.setState({
+                    this.setState({
                     isLoaded: true,
                     data: [...data, ...json[this.props.dataProperty]],
                     scrolling: false,
                     totalCount: json._totalCount
-                  });
+                    });
                 },
                 (error) => {
-                  this.setState({
+                    this.setState({
                     isLoaded: false,
                     error
-                  });
+                    });
                 }
-              );
+                );
         }
-      };
-    
-      loadMore = () => {
+    };
+
+    loadMore = () => {
         this.setState(
-          prevState => ({
+            prevState => ({
             page: prevState.page + 1,
             scrolling: true
-          }),
-    
-          this.loadData
+            }),
+
+            this.loadData
         );
-      };
-    
-      handleScroll = () => { 
+    };
+
+    handleScroll = () => { 
         const lastElement = document.querySelector(".item-list > div.item-container:last-child");
         const lastElementOffset = lastElement.offsetTop + lastElement.clientHeight;
         const pageOffset = window.pageYOffset + window.innerHeight;
         
         if (pageOffset > lastElementOffset - 100) {
-              this.loadMore();
-          }
-      };
+            this.loadMore();
+        }
+    };
 
-      render() {
-        console.log(this.props.component);
+    render() {
         return this.state.isLoaded ? 
             React.createElement(
                 this.props.component, { data: this.state.data }
