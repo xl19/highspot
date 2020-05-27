@@ -5,10 +5,14 @@ export class InfiniteScroll extends React.Component {
     constructor(props) {
         super(props);
 
+        this.itemsPerTime = 20;
+
         this.state = {
             data: [],
             page: 1,
+            currentCount: this.itemsPerTime,
             totalCount: 0,
+            pageSize: 0,
             searchField: '',
             isLoaded: false,
             error: ''
@@ -36,7 +40,8 @@ export class InfiniteScroll extends React.Component {
                             isLoaded: true,
                             data: [...data, ...json[this.props.dataProperty]],
                             scrolling: false,
-                            totalCount: json._totalCount
+                            totalCount: json._totalCount,
+                            pageSize: json._pageSize
                         });
                     },
                     (error) => {
@@ -52,8 +57,8 @@ export class InfiniteScroll extends React.Component {
     loadMore = () => {
         this.setState(
             prevState => ({
-            page: prevState.page + 1,
-            scrolling: true
+                page: prevState.page + 1,
+                scrolling: true
             }),
 
             this.loadData
@@ -66,16 +71,22 @@ export class InfiniteScroll extends React.Component {
         const pageOffset = window.pageYOffset + window.innerHeight;
         
         if (pageOffset > lastElementOffset - 100) {
-            this.loadMore();
+            if (this.state.currentCount % this.state.pageSize === 0) {
+                this.loadMore();
+            }
+
+            this.setState({
+                currentCount: this.state.currentCount + this.itemsPerTime
+            });
         }
     };
 
     render() {
-        const { data } = this.state;
-        const filteredData = data.filter(
+        const filteredData = this.state.data.filter(
             element => element.name.toLowerCase().includes(this.props.searchField.toLowerCase())
         );
+        const slicedData = filteredData.slice(0, this.state.currentCount);
 
-        return this.state.isLoaded ? <this.props.component data={filteredData} /> : <LoadingIndicator />;
+        return this.state.isLoaded ? <this.props.component data={slicedData} /> : <LoadingIndicator />;
     }
 };
