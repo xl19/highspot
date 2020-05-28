@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/highspot/precache-manifest.d5d6c0819704e9b84a085f26675794c1.js"
+  "/highspot/precache-manifest.fe9d20eeadaa52d1624eeb086ca645dc.js"
 );
 
 self.addEventListener('message', (event) => {

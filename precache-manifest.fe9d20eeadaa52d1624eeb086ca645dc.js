@@ -1,11 +1,11 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "3235b97ee455ec808af6a4d150708bb3",
+    "revision": "d619b918b6053e469affac9772aca2ce",
     "url": "/highspot/index.html"
   },
   {
-    "revision": "cf8d5229450897b3a98f",
-    "url": "/highspot/static/css/main.340478a2.chunk.css"
+    "revision": "631d10bbe331e968d1c1",
+    "url": "/highspot/static/css/main.d367b2e7.chunk.css"
   },
   {
     "revision": "8283df093ff77010188f",
@@ -16,7 +16,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/highspot/static/js/2.f0d1cdcc.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "cf8d5229450897b3a98f",
+    "revision": "631d10bbe331e968d1c1",
     "url": "/highspot/static/js/main.2f967fa3.chunk.js"
   },
   {

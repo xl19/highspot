@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/highspot/static/css/main.340478a2.chunk.css",
+    "main.css": "/highspot/static/css/main.d367b2e7.chunk.css",
     "main.js": "/highspot/static/js/main.2f967fa3.chunk.js",
     "main.js.map": "/highspot/static/js/main.2f967fa3.chunk.js.map",
     "runtime-main.js": "/highspot/static/js/runtime-main.bd9f1ece.js",
@@ -8,15 +8,15 @@
     "static/js/2.f0d1cdcc.chunk.js": "/highspot/static/js/2.f0d1cdcc.chunk.js",
     "static/js/2.f0d1cdcc.chunk.js.map": "/highspot/static/js/2.f0d1cdcc.chunk.js.map",
     "index.html": "/highspot/index.html",
-    "precache-manifest.d5d6c0819704e9b84a085f26675794c1.js": "/highspot/precache-manifest.d5d6c0819704e9b84a085f26675794c1.js",
+    "precache-manifest.fe9d20eeadaa52d1624eeb086ca645dc.js": "/highspot/precache-manifest.fe9d20eeadaa52d1624eeb086ca645dc.js",
     "service-worker.js": "/highspot/service-worker.js",
-    "static/css/main.340478a2.chunk.css.map": "/highspot/static/css/main.340478a2.chunk.css.map",
+    "static/css/main.d367b2e7.chunk.css.map": "/highspot/static/css/main.d367b2e7.chunk.css.map",
     "static/js/2.f0d1cdcc.chunk.js.LICENSE.txt": "/highspot/static/js/2.f0d1cdcc.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.bd9f1ece.js",
     "static/js/2.f0d1cdcc.chunk.js",
-    "static/css/main.340478a2.chunk.css",
+    "static/css/main.d367b2e7.chunk.css",
     "static/js/main.2f967fa3.chunk.js"
   ]
 }
