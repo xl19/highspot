@@ -10,7 +10,7 @@ The app has been designed to be highly modular so the components can be re-used.
 
 Card, CardList and SearchBox are functional components that do not require state, which has instead been defined in the App and InfiniteScroll class components. This keeps the design clean by also maintaining a clear separation of concerns for each module/component in our application.
 
-When the user searches for a card name, that will be passed as a prop to the InfiniteScroll component, which in turn will show the updated card collection. The other state changes are reflected when the user scolls the page; the code makes an initial async call to fetch the cards API endpoint when the InfiniteScroll component has mounted (which is done in the componentDidMoun life cycle method). This process occurs through pagination, and the code initially fetches the data from the first page - that is sliced down to the first 20 items. 
+When the user searches for a card name, that will be passed as a prop to the InfiniteScroll component, which in turn will show the updated card collection. The other state changes are reflected when the user scolls the page; the code makes an initial async call to fetch the cards API endpoint when the InfiniteScroll component has mounted (which is done in the componentDidMount life cycle method). This process occurs through pagination, and the code initially fetches the data from the first page - that is sliced down to the first 20 items. 
 
 As the user scrolls down, 20 more cards are displayed (without more fetching at this time, since the data has already been fetched as part of the page), and we keep displaying 20 more cards until we reach the end of the page, at which point we make another API call to fetch the items from the next page (assuming the current count hasn't exceeded the total count).
 
@@ -24,7 +24,7 @@ Potential improvements / TODOs:
 3) The loading indicator seems to work fine at the top of the card collection, but doesn't seem to show up later when scrolling down and making more fetch calls.
 
 Component implementation alternatives:
-1) Initially, the use of React Bootstrap and of the React Infinite Scroll Component were considered - in order to maximize code re-usability based on existing npm modules on the Web. However I found it more interesting and better suited to fulfill the requirements of the app to build new custom components - that have been designed to be re-used across other scenarios and input data sets.
+1) Initially, the use of React Bootstrap and of the React Infinite Scroll Component was considered - in order to maximize code re-usability based on existing npm modules on the Web. However I found it more interesting and better suited to fulfill the requirements of the app to build new custom components - that have been designed to be re-used across other scenarios and input data sets.
 
 ## Available Scripts
 
